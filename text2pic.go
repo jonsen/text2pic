@@ -34,6 +34,7 @@ type Padding struct {
 
 type Configure struct {
 	Width   int
+	Height  int
 	BgColor Color
 }
 
@@ -69,13 +70,13 @@ func (this *TextPicture) AddPictureLine(reader io.Reader, padding Padding) {
 func (this *TextPicture) Draw(writer io.Writer, filetype int) error {
 	var err error
 	// Initialize the context.
-	height := 0
+	height := this.conf.Height
 	width := this.conf.Width
 	rgba := image.NewRGBA(image.Rect(0, 0, width, height))
-	for _, v := range this.lines {
-		height += v.getHeight(width, rgba)
-	}
-	rgba = image.NewRGBA(image.Rect(0, 0, width, height))
+	//for _, v := range this.lines {
+	//	height += v.getHeight(width, rgba)
+	//}
+	//rgba = image.NewRGBA(image.Rect(0, 0, width, height))
 	draw.Draw(rgba, rgba.Bounds(), this.conf.BgColor, image.ZP, draw.Src)
 	pt := fixed.Point26_6{X: fixed.Int26_6(0), Y: fixed.Int26_6(0)}
 	for _, v := range this.lines {
